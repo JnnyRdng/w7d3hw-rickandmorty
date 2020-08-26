@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Rick and Morty</h1>
-    <form>
+    <div>
       <label for="search-box">Search:</label>
       <input
         type="text"
@@ -10,12 +10,12 @@
         v-model="filterString"
         v-on:input="filterByString"
       />
-      <datalist id="character-list">
+      <!-- <datalist id="character-list">
         <option v-for="(character, index) in characters" :key="index">{{character.name}}</option>
-      </datalist>
+      </datalist>-->
       <!-- <input type="submit" value="Search" /> -->
       <p>Filtered:{{filterLength}}</p>
-    </form>
+    </div>
     <main>
       <character-list :characters="characters"></character-list>
       <character-detail v-if="searchCharacter" :character="searchCharacter"></character-detail>
@@ -47,6 +47,11 @@ export default {
 
     eventBus.$on("character-selected", (character) => {
       this.selectedCharacter = character;
+    });
+
+    eventBus.$on("clear-search", (res) => {
+      this.filterString = "";
+      this.searchCharacter = null;
     });
   },
   components: {
