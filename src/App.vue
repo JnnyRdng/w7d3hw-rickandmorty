@@ -1,4 +1,12 @@
-<template></template>
+<template>
+    <div>
+        <h1>Rick and Morty</h1>
+        <main>
+        <character-list :characters="characters"></character-list>
+        <character-detail :character="selectedCharacter"></character-detail>
+        </main>
+    </div>
+</template>
 
 <script>
 import { eventBus } from "./main.js";
@@ -16,7 +24,7 @@ export default {
   mounted() {
     fetch("https://rickandmortyapi.com/api/character/")
       .then((response) => response.json())
-      .then((characters) => (this.characters = characters));
+      .then((characters) => (this.characters = characters.results));
 
     eventBus.$on("character-selected", (character) => {
       this.selectedCharacter = character;
@@ -30,4 +38,9 @@ export default {
 </script>
 
 <style>
+main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
 </style>
