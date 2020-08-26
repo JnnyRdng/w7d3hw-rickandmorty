@@ -50,5 +50,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+div {
+  background-color: khaki;
+}
 </style>

@@ -85,9 +85,19 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "Get Schwifty";
+  src: local("Get Schwifty"), url("./assets/get_schwifty.ttf");
+}
+body {
+  background-image: url(https://i.imgur.com/QE0WYWK.jpg);
+  font-family: "Get Schwifty", serif;
+  font-size: 2rem;
+}
 main {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  background-color: khaki;
 }
 </style>
