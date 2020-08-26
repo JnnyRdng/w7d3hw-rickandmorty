@@ -1,11 +1,27 @@
 <template>
-    <div>
-        <h1>Rick and Morty</h1>
-        <main>
-        <character-list :characters="characters"></character-list>
-        <character-detail :character="selectedCharacter"></character-detail>
-        </main>
-    </div>
+  <div>
+    <h1>Rick and Morty</h1>
+    <form>
+      <label for="search-box">Search:</label>
+      <input
+        type="text"
+        list="character-list"
+        id="search-box"
+        v-model="filterString"
+        v-on:input="filterByString"
+      />
+      <datalist id="character-list">
+        <option v-for="(character, index) in characters" :key="index">{{character.name}}</option>
+      </datalist>
+      <!-- <input type="submit" value="Search" /> -->
+      <p>Filtered:{{filterLength}}</p>
+    </form>
+    <main>
+      <character-list :characters="characters"></character-list>
+      <character-detail v-if="searchCharacter" :character="searchCharacter"></character-detail>
+      <character-detail v-else :character="selectedCharacter"></character-detail>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -19,6 +35,9 @@ export default {
     return {
       characters: [],
       selectedCharacter: null,
+      filterString: "",
+      filteredCharacters: [],
+      searchCharacter: null,
     };
   },
   mounted() {
@@ -34,13 +53,36 @@ export default {
     "character-list": CharacterList,
     "character-detail": CharacterDetail,
   },
+  methods: {
+    filterByString: function () {
+      this.filteredCharacters = this.characters.filter((character) => {
+        return (
+          character.name
+            .toLowerCase()
+            .indexOf(this.filterString.toLowerCase()) > -1
+        );
+      });
+      // this.filterString = "";
+      if (this.filteredCharacters.length === 1) {
+        this.searchCharacter = this.filteredCharacters[0];
+      } else {
+        this.searchCharacter = null;
+      }
+      // return this.searchCharacter;
+    },
+  },
+  computed: {
+    filterLength: function () {
+      return this.filteredCharacters.length;
+    },
+  },
 };
 </script>
 
 <style>
 main {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 </style>
