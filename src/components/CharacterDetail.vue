@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="character">
       <img :src="character.image" alt="">
       <h4>{{character.name}}</h4>
       <p>Species: {{character.species}}</p>
